@@ -45,6 +45,31 @@
       <p>&copy; 2023 Mergington High School</p>
     </footer>
 
-    <script src="app.js"></script>
+    <script>
+      console.log("Inline script executed");
+      document.addEventListener("DOMContentLoaded", function() {
+        console.log("Inline DOMContentLoaded fired");
+        const testDiv = document.getElementById("activities-list");
+        if (testDiv) {
+          testDiv.innerHTML = "INLINE TEST: JavaScript is working";
+        }
+
+        // Test fetch
+        fetch("/activities")
+          .then(response => response.json())
+          .then(data => {
+            console.log("Fetched data:", data);
+            if (testDiv) {
+              testDiv.innerHTML += "<br>FETCH TEST: Got " + Object.keys(data).length + " activities";
+            }
+          })
+          .catch(error => {
+            console.error("Fetch error:", error);
+            if (testDiv) {
+              testDiv.innerHTML += "<br>FETCH ERROR: " + error.message;
+            }
+          });
+      });
+    </script>
   </body>
 </html>
